@@ -44,7 +44,7 @@ This repo now supports **Nix flakes** while keeping the existing `configuration.
 
 ### First time (generate lock file)
 ```bash
-nix flake update
+nix --extra-experimental-features 'nix-command flakes' flake update
 ```
 
 ### Rebuild with flakes
@@ -54,8 +54,14 @@ sudo nixos-rebuild switch --flake .#nixos
 
 ### Update inputs and rebuild
 ```bash
-nix flake update
+nix --extra-experimental-features 'nix-command flakes' flake update
 sudo nixos-rebuild switch --flake .#nixos
+```
+
+### Optional: enable flakes for user-level `nix` commands
+```bash
+mkdir -p ~/.config/nix
+printf 'experimental-features = nix-command flakes\n' >> ~/.config/nix/nix.conf
 ```
 
 ### Optional checks
