@@ -4,7 +4,7 @@ My personal NixOS system configuration.
 
 ## Current Setup
 
-This is a traditional NixOS configuration using `configuration.nix` with the following setup:
+This repo now supports **Nix flakes** while keeping the existing `configuration.nix` structure.
 
 ### System
 - **Desktop Environment**: KDE Plasma 6 (Wayland)
@@ -17,7 +17,7 @@ This is a traditional NixOS configuration using `configuration.nix` with the fol
 - **Audio**: PipeWire with ALSA and PulseAudio compatibility
 - **Maintenance**: 
   - Automatic garbage collection (weekly, keeps last 30 days)
-  - Automatic system updates (daily, no auto-reboot)
+  - Automatic system updates (daily, flake-based, no auto-reboot)
 
 ### Installed Packages
 - **Development**: VSCode, GitHub Copilot CLI, git
@@ -27,12 +27,11 @@ This is a traditional NixOS configuration using `configuration.nix` with the fol
 
 ## Future Plans
 
-### Migration to Flakes
-Planning to rebuild this configuration using Nix flakes for:
+### Flake Benefits
 - **Reproducibility**: Lock dependencies with `flake.lock` for consistent builds
 - **Modularity**: Better organization with reusable modules
 - **Composability**: Easier to share and compose configurations
-- **Modern tooling**: Use `nix develop` shells and cleaner CLI interface
+- **Modern tooling**: Cleaner CLI and explicit inputs
 
 ### Expansion Goals
 - Home Manager integration for user-level configuration
@@ -43,12 +42,24 @@ Planning to rebuild this configuration using Nix flakes for:
 
 ## Usage
 
-To rebuild the system after making changes:
+### First time (generate lock file)
 ```bash
-sudo nixos-rebuild switch
+nix flake update
 ```
 
-To update and rebuild:
+### Rebuild with flakes
 ```bash
-sudo nixos-rebuild switch --upgrade
+sudo nixos-rebuild switch --flake .#nixos
+```
+
+### Update inputs and rebuild
+```bash
+nix flake update
+sudo nixos-rebuild switch --flake .#nixos
+```
+
+### Optional checks
+```bash
+nix flake show
+nix flake check
 ```
