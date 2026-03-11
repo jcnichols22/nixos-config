@@ -51,7 +51,6 @@
     vim
     wget
     _1password-gui
-    tailscale
     vscode
     brave
     github-copilot-cli
@@ -63,6 +62,4 @@
     git
   ];
 
-  # Enable Tailscale.
-  services.tailscale.enable = true;
 }

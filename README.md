@@ -20,7 +20,7 @@ This repo now supports **Nix flakes** while keeping the existing `configuration.
     ├── desktop/
     │   └── plasma.nix
     ├── services/
-    │   └── tailscale-exit-node.nix
+    │   └── tailscale.nix
     └── system/
         ├── base.nix
         └── maintenance.nix
@@ -35,7 +35,10 @@ This repo now supports **Nix flakes** while keeping the existing `configuration.
 
 ### Key Features
 
-- **Networking**: NetworkManager + Tailscale VPN
+- **Networking**: NetworkManager + Tailscale VPN with automatic subnet routing
+  - Home (`ChosenWAN`): direct LAN access, no exit node
+  - Away: subnet routes accepted via Tailscale, giving access to home LAN (`192.168.0/24`, `192.168.10/24`, `192.168.50/24`)
+  - DNS managed by Tailscale MagicDNS → AdGuard
 - **Audio**: PipeWire with ALSA and PulseAudio compatibility
 - **Maintenance**:
 - Automatic garbage collection (weekly, keeps last 30 days)

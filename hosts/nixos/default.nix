@@ -4,8 +4,8 @@
     ../../hardware-configuration.nix
     ../../modules/system/base.nix
     ../../modules/desktop/plasma.nix
-    ../../modules/services/tailscale-exit-node.nix
     ../../modules/system/maintenance.nix
+    ../../modules/services/tailscale.nix
   ];
 
   networking.hostName = "nixos";
