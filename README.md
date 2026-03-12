@@ -104,6 +104,31 @@ sudo systemctl start patchmon-install.service
 sudo systemctl status patchmon-install.service
 ```
 
+### Patchmon troubleshooting (NixOS)
+
+- If `nixos-rebuild switch --flake .#nixos` says `patchmon.nix` does not exist, stage the new file first:
+
+```bash
+git add modules/services/patchmon.nix hosts/nixos/default.nix README.md
+```
+
+- If installer logs show `401`, your key is invalid/placeholder. Update `/etc/patchmon/agent.env` and restart:
+
+```bash
+sudo systemctl restart patchmon-install.service
+sudo journalctl -u patchmon-install.service -n 100 --no-pager
+```
+
+- NixOS keeps `/etc/systemd/system` declarative/read-only. This config intentionally lets NixOS manage `patchmon-agent.service`.
+
+- Verify healthy state:
+
+```bash
+sudo systemctl is-active patchmon-install.service
+sudo systemctl is-active patchmon-agent.service
+sudo systemctl status patchmon-install.service patchmon-agent.service --no-pager
+```
+
 ### Add another host
 
 1. Create `hosts/<hostname>/default.nix`.
