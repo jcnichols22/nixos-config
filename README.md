@@ -20,7 +20,8 @@ This repo now supports **Nix flakes** while keeping the existing `configuration.
     ├── desktop/
     │   └── plasma.nix
     ├── services/
-    │   └── tailscale.nix
+    │   ├── tailscale.nix
+    │   └── patchmon.nix
     └── system/
         ├── base.nix
         └── maintenance.nix
@@ -39,6 +40,7 @@ This repo now supports **Nix flakes** while keeping the existing `configuration.
   - Home (`ChosenWAN`): direct LAN access, no exit node
   - Away: subnet routes accepted via Tailscale, giving access to home LAN (`192.168.0/24`, `192.168.10/24`, `192.168.50/24`)
   - DNS managed by Tailscale MagicDNS → AdGuard
+- **Monitoring**: Patchmon agent installation via systemd one-shot service with runtime credentials from `/etc/patchmon/agent.env`
 - **Audio**: PipeWire with ALSA and PulseAudio compatibility
 - **Maintenance**:
 - Automatic garbage collection (weekly, keeps last 30 days)
@@ -80,6 +82,26 @@ nix --extra-experimental-features 'nix-command flakes' flake update
 
 ```bash
 sudo nixos-rebuild switch --flake .#nixos
+```
+
+### Patchmon secret setup
+
+Create a root-only environment file before rebuilding:
+
+```bash
+sudo install -d -m 700 /etc/patchmon
+sudo tee /etc/patchmon/agent.env >/dev/null <<'EOF'
+PATCHMON_API_ID=patchmon_daeec9653c02d39d
+PATCHMON_API_KEY=REPLACE_WITH_YOUR_KEY
+EOF
+sudo chmod 600 /etc/patchmon/agent.env
+```
+
+Run once after rebuild (or reboot):
+
+```bash
+sudo systemctl start patchmon-install.service
+sudo systemctl status patchmon-install.service
 ```
 
 ### Add another host

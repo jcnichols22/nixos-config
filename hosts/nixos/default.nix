@@ -6,6 +6,7 @@
     ../../modules/desktop/plasma.nix
     ../../modules/system/maintenance.nix
     ../../modules/services/tailscale.nix
+    ../../modules/services/patchmon.nix
   ];
 
   networking.hostName = "nixos";
