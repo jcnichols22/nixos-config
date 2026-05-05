@@ -60,6 +60,9 @@
     unzip
     tree
     git
+    nextcloud-client
+    discord
+  
   ];
 
 }

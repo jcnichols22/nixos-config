@@ -53,6 +53,10 @@ This repo now supports **Nix flakes** while keeping the existing `configuration.
 - **Productivity**: Obsidian, 1Password
 - **Utilities**: vim, wget, curl, htop, tree, unzip
 
+### Nextcloud
+
+- **Nextcloud Desktop Client**: Installed for file sync with your existing Nextcloud server. Configure your account in the desktop app after login.
+
 ## Future Plans
 
 ### Flake Benefits
@@ -91,7 +95,7 @@ Create a root-only environment file before rebuilding:
 ```bash
 sudo install -d -m 700 /etc/patchmon
 sudo tee /etc/patchmon/agent.env >/dev/null <<'EOF'
-PATCHMON_API_ID=patchmon_daeec9653c02d39d
+PATCHMON_API_ID=REPLACE_WITH_YOUR_ID
 PATCHMON_API_KEY=REPLACE_WITH_YOUR_KEY
 EOF
 sudo chmod 600 /etc/patchmon/agent.env
